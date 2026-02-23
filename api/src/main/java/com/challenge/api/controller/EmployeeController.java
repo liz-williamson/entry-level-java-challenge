@@ -1,12 +1,11 @@
 package com.challenge.api.controller;
 
 import com.challenge.api.model.Employee;
+import com.challenge.api.model.EmployeeImpl;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Fill in the missing aspects of this Spring Web REST Controller. Don't forget to add a Service layer.
@@ -14,13 +13,21 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
+    // service layer
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     /**
      * @implNote Need not be concerned with an actual persistence layer. Generate mock Employee models as necessary.
      * @return One or more Employees.
      */
+    @GetMapping
+    // return a list of all Employees
     public List<Employee> getAllEmployees() {
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+        return employeeService.getAllEmployees();
     }
 
     /**
@@ -28,16 +35,20 @@ public class EmployeeController {
      * @param uuid Employee UUID
      * @return Requested Employee if exists
      */
-    public Employee getEmployeeByUuid(UUID uuid) {
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+    @GetMapping("/{uuid}")
+    // returns the employee w/ corresponding uuid in the path
+    public Employee getEmployeeByUuid(@PathVariable UUID uuid) {
+        return employeeService.getEmployeeByUuid(uuid);
     }
 
     /**
      * @implNote Need not be concerned with an actual persistence layer.
-     * @param requestBody hint!
+     * @param employee instance of an Employee
      * @return Newly created Employee
      */
-    public Employee createEmployee(Object requestBody) {
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+    @PostMapping
+    // creates & returns an employee from JSON body
+    public Employee createEmployee(@RequestBody EmployeeImpl employee) {
+        return employeeService.createEmployee(employee);
     }
 }
