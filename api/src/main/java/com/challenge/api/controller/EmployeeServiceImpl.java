@@ -2,9 +2,8 @@ package com.challenge.api.controller;
 
 import com.challenge.api.model.Employee;
 import com.challenge.api.model.EmployeeImpl;
-import org.springframework.stereotype.Service;
-
 import java.util.*;
+import org.springframework.stereotype.Service;
 
 @Service
 
